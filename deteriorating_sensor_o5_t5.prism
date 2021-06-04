@@ -41,19 +41,19 @@ module m1
 	[o] s=0 & t<=5& !b -> 0.01845281:(o' = 0) & (b' = true) + 0.11276719:(o' = 1) & (b' = true) + 0.27565312:(o' = 2) & (b' = true) + 0.33690938:(o' = 3) & (b' = true) + 0.20588906:(o' = 4) & (b' = true) + 0.05032844:(o' = 5) & (b' = true);
 	[o] s=1 & t<=5& !b -> 0.01845281:(o' = 0) & (b' = true) + 0.11276719:(o' = 1) & (b' = true) + 0.27565313:(o' = 2) & (b' = true) + 0.33690937:(o' = 3) & (b' = true) + 0.20588906:(o' = 4) & (b' = true) + 0.05032844:(o' = 5) & (b' = true);
 
-	//c
-	[c] s = 0 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
-	//s
-	[s] s = 0 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
-	//r
-	[r] s = 0 & t < maxi & b -> p11:(s'=0) & (t'= 1) & (b'=false) + p12:(s'=1) & (t'= 1) & (b'=false);
+	//G
+	[G] s = 0 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
+	//H
+	[H] s = 0 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
+	//J
+	[J] s = 0 & t < maxi & b -> p11:(s'=0) & (t'= 1) & (b'=false) + p12:(s'=1) & (t'= 1) & (b'=false);
 	
-	//c
-	[c] s = 1 & t < maxi & b -> p22:(s'=1) & (t'=t+1) & (b'=false);
-	//s
-	[s] s = 1 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
-	//r
-	[r] s = 1 & t < maxi & b -> p11:(s'=0) & (t'= 1) & (b'=false) + p12:(s'=1) & (t'= 1) & (b'=false);
+	//G
+	[G] s = 1 & t < maxi & b -> p22:(s'=1) & (t'=t+1) & (b'=false);
+	//H
+	[H] s = 1 & t < maxi & b -> p11:(s'=0) & (t'=t+1) & (b'=false) + p12:(s'=1) & (t'=t+1) & (b'=false);
+	//J
+	[J] s = 1 & t < maxi & b -> p11:(s'=0) & (t'= 1) & (b'=false) + p12:(s'=1) & (t'= 1) & (b'=false);
 	
 endmodule
 label "end"= t = maxi;
@@ -62,8 +62,8 @@ label "outofcontrol" = s = 1;
 
 rewards
 	s = 1: cd;
-	[s] s = 0: cs;
-	[s] s = 1: cs+cr;
-	[r] s = 0: cs+ci;
-	[r] s = 1: cs+ci+cr;
+	[H] s = 0: cs;
+	[H] s = 1: cs+cr;
+	[J] s = 0: cs+ci;
+	[J] s = 1: cs+ci+cr;
 endrewards
