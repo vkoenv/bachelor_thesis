@@ -97,9 +97,9 @@ public class ObservableMaker {
         String tussen = "";
         for(int t = 0; t<=tmax;t++){
             tussen+="//t=" + t;
-            tussen += "\n[o] s=0 & t=" + t + "& !b -> " ;
+            tussen += "\n[o] i=0 & t=" + t + "& !b -> " ;
             tussen += Binomial(Binom(true,t));
-            tussen += "\n[o] s=1 & t=" + t + "& !b -> " ;
+            tussen += "\n[o] i=1 & t=" + t + "& !b -> " ;
             tussen += Binomial(Binom(false,t));
             tussen += "\n";
         }
