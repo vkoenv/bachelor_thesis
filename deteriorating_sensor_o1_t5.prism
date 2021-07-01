@@ -1,0 +1,72 @@
+pomdp
+
+observables
+	o, t, b
+endobservables
+
+
+const double p11 = 0.9;
+const double p12 = 0.1;
+const double p22 = 1;
+
+const int ci = 20;
+const int cs = 75;
+const int cr = 50;
+const int cd = 100;
+const int maxt = 5;
+const int maxo = 1;
+
+module m1
+	i : [0..1] init 0;
+	t : [0..maxt] init 0;
+	o : [0..maxo] init 0;
+	b : bool init true; 
+	
+	//t=0
+	[o] i=0 & t=0& !b -> 0.60000000:(o' = 0) & (b' = true) + 0.40000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=0& !b -> 0.30000000:(o' = 0) & (b' = true) + 0.70000000:(o' = 1) & (b' = true);
+	//t=1
+	[o] i=0 & t=1& !b -> 0.57000000:(o' = 0) & (b' = true) + 0.43000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=1& !b -> 0.33000000:(o' = 0) & (b' = true) + 0.67000000:(o' = 1) & (b' = true);
+	//t=2
+	[o] i=0 & t=2& !b -> 0.54000000:(o' = 0) & (b' = true) + 0.46000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=2& !b -> 0.36000000:(o' = 0) & (b' = true) + 0.64000000:(o' = 1) & (b' = true);
+	//t=3
+	[o] i=0 & t=3& !b -> 0.51000000:(o' = 0) & (b' = true) + 0.49000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=3& !b -> 0.39000000:(o' = 0) & (b' = true) + 0.61000000:(o' = 1) & (b' = true);
+	//t=4
+	[o] i=0 & t=4& !b -> 0.48000000:(o' = 0) & (b' = true) + 0.52000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=4& !b -> 0.42000000:(o' = 0) & (b' = true) + 0.58000000:(o' = 1) & (b' = true);
+	//t=5
+	[o] i=0 & t=5& !b -> 0.45000000:(o' = 0) & (b' = true) + 0.55000000:(o' = 1) & (b' = true);
+	[o] i=1 & t=5& !b -> 0.45000000:(o' = 0) & (b' = true) + 0.55000000:(o' = 1) & (b' = true);
+
+
+
+
+	//G
+	[g] i = 0 & t < maxt & b -> p11:(i'=0) & (t'=t+1) & (b'=false) + p12:(i'=1) & (t'=t+1) & (b'=false);
+	//H
+	[h] i = 0 & t < maxt & b -> p11:(i'=0) & (t'=t+1) & (b'=false) + p12:(i'=1) & (t'=t+1) & (b'=false);
+	//J
+	[j] i = 0 & t < maxt & b -> p11:(i'=0) & (t'= 1) & (b'=false) + p12:(i'=1) & (t'= 1) & (b'=false);
+	
+	//G
+	[g] i = 1 & t < maxt & b -> p22:(i'=1) & (t'=t+1) & (b'=false);
+	//H
+	[h] i = 1 & t < maxt & b -> p11:(i'=0) & (t'=t+1) & (b'=false) + p12:(i'=1) & (t'=t+1) & (b'=false);
+	//J
+	[j] i = 1 & t < maxt & b -> p11:(i'=0) & (t'= 1) & (b'=false) + p12:(i'=1) & (t'= 1) & (b'=false);
+	
+endmodule
+label "end"= t = maxt;
+label "incontrol" = i = 0;
+label "outofcontrol" = i = 1;
+
+rewards
+	i = 1: cd;
+	[h] i = 0: cs;
+	[h] i = 1: cs+cr;
+	[j] i = 0: cs+ci;
+	[j] i = 1: cs+ci+cr;
+endrewards
